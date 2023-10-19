@@ -27,7 +27,7 @@
             if($password === $confirmpassword){
 
                 //verifica tamanho da senha
-                if(strlen($password) >= 12) {
+                if(strlen($password) >= 6) {
 
                     //verifica se o email já está cadastrado
                     if($userDAO->findByEmail($email) === false){
