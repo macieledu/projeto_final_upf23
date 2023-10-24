@@ -125,7 +125,8 @@
 }
 /* editprofile */
 
-#profile-image-container {
+#profile-image-container,
+.profile-image-container {
   width: 150px;
   height: 150px;
   border: 6px solid #F5C518;
@@ -133,6 +134,11 @@
   background-size: cover;
   background-position: center;
   margin: 15px auto;
+}
+
+.profile-image-container {
+  width: 70px;
+  height: 70px;
 }
 
 .page-description {
@@ -144,14 +150,17 @@
 }
 
 .form-control.disabled {
-  background-color: #bbb;
+  background-color: #BBB;
 }
 
 #change-password-container {
   margin-top: 30px;
 }
 
-.edit-profile-page.card-btn {
+.edit-profile-page .card-btn,
+#add-movie-container .card-btn,
+#review-form .card-btn,
+#edit-movie-form .card-btn {
   width: auto;
 }
 
