@@ -2,7 +2,7 @@
  require_once("templates/header.php");
 
 
- // verifica se o user esta autenticado
+ // verifica se o user esta autenticadossss
  require_once("dao/userDAO.php");
  require_once("models/User.php");
 
@@ -50,7 +50,7 @@
                     <label for="description">Descrição:</label>
                     <textarea name="description" id="description" rows="5" class="form-control" placeholder="Descreva resumidamente o filme..."></textarea>
                 </div>
-                <imput type="submit" class="btn card-btn" value="Adicionar filme"></imput>
+                <input type="submit" class="btn card-btn" value="Adicionar filme"></imput>
             </form>
         </div>
     </div>

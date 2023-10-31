@@ -34,38 +34,39 @@
     $userData->email = $email;
     $userData->bio = $bio;
 
-// Upload da imagem
-if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
-  
+  // Upload da imagem
+  if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
+    
     $image = $_FILES["image"];
     $imageTypes = ["image/jpeg", "image/jpg", "image/png"];
     $jpgArray = ["image/jpeg", "image/jpg"];
-  
+
     // Checagem de tipo de imagem
     if(in_array($image["type"], $imageTypes)) {
-  
-      // Checar se jpg
-      if(in_array($image["type"], $jpgArray)) {
-  
-        $imageFile = imagecreatefromjpeg($image["tmp_name"]);
-  
-      // Imagem é png
-      } else {
-  
-          $imageFile = imagecreatefrompng($image["tmp_name"]);
-  
-      }
-  
-      $imageName = $user->imageGenerateName();
-  
-      imagejpeg($imageFile, "./img/users/" . $imageName, 100);
-  
-      $userData->image = $imageName;
-  
+
+      // Checar se jpg ou png
+    if(in_array($image["type"], $jpgArray)) {
+      $imageFile = imagecreatefromjpeg($image["tmp_name"]);
     } else {
-  
+      $imageFile = imagecreatefrompng($image["tmp_name"]);
+
+      // Verifica se a criação da imagem PNG foi bem-sucedida
+      if(!$imageFile) {
+          $message->setMessage("Falha ao processar a imagem PNG. Certifique-se de que é uma imagem válida.", "error", "back");
+          exit; // Ou redirecione para onde for apropriado em seu caso
+      }
+    }
+
+      $imageName = $user->imageGenerateName();
+
+      imagejpeg($imageFile, "./img/users/" . $imageName, 100);
+
+      $userData->image = $imageName;
+
+    } else {
+
       $message->setMessage("Tipo inválido de imagem, insira png ou jpg!", "error", "back");
-  
+
     }
   }
 
