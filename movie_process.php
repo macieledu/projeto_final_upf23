@@ -11,15 +11,12 @@
   $userDao = new UserDAO($conn, $BASE_URL);
   $movieDao = new MovieDAO($conn, $BASE_URL);
 
-  // Resgata o tipo do formulário
   $type = filter_input(INPUT_POST, "type");
 
-  // Resgata dados do usuário
   $userData = $userDao->verifyToken();
 
   if($type === "create") {
 
-    // Receber os dados dos inputs
     $title = filter_input(INPUT_POST, "title");
     $description = filter_input(INPUT_POST, "description");
     $trailer = filter_input(INPUT_POST, "trailer");
@@ -28,7 +25,7 @@
 
     $movie = new Movie();
 
-    // Validação mínima de dados
+    //validação min
     if(!empty($title) && !empty($description) && !empty($category)) {
 
       $movie->title = $title;
@@ -38,24 +35,24 @@
       $movie->length = $length;
       $movie->users_id = $userData->id;
 
-      // Upload de imagem do filme
+      //upload de img
       if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
 
         $image = $_FILES["image"];
         $imageTypes = ["image/jpeg", "image/jpg", "image/png"];
         $jpgArray = ["image/jpeg", "image/jpg"];
 
-        // Checando tipo da imagem
+        //pega tipo img
         if(in_array($image["type"], $imageTypes)) {
 
-          // Checa se imagem é jpg
+          //jpg
           if(in_array($image["type"], $jpgArray)) {
             $imageFile = imagecreatefromjpeg($image["tmp_name"]);
           } else {
             $imageFile = imagecreatefrompng($image["tmp_name"]);
           }
 
-          // Gerando o nome da imagem
+          //gera nome img
           $imageName = $movie->imageGenerateName();
 
           imagejpeg($imageFile, "./img/movies/" . $imageName, 100);
@@ -80,14 +77,13 @@
 
   } else if($type === "delete") {
 
-    // Recebe os dados do form
     $id = filter_input(INPUT_POST, "id");
 
     $movie = $movieDao->findById($id);
 
     if($movie) {
 
-      // Verificar se o filme é do usuário
+      // verifica se o filme pertence ao usuário
       if($movie->users_id === $userData->id) {
 
         $movieDao->destroy($movie->id);
@@ -106,7 +102,7 @@
 
   } else if($type === "update") { 
 
-    // Receber os dados dos inputs
+    //recebe dados
     $title = filter_input(INPUT_POST, "title");
     $description = filter_input(INPUT_POST, "description");
     $trailer = filter_input(INPUT_POST, "trailer");

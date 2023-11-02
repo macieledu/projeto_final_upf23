@@ -4,7 +4,7 @@
   require_once("models/Message.php");
 
   // Review DAO
-  require_once("dao/ReviewDAO.php");
+ 
 
   class MovieDAO implements MovieDAOInterface {
 
@@ -30,6 +30,8 @@
       $movie->category = $data["category"];
       $movie->length = $data["length"];
       $movie->users_id = $data["users_id"];
+
+      return $movie;
 
     }
 
@@ -180,7 +182,7 @@
 
       $stmt->execute();
 
-      // Mensagem de sucesso por adicionar filme
+      // msg de sucesso
       $this->message->setMessage("Filme adicionado com sucesso!", "success", "index.php");
 
     }
