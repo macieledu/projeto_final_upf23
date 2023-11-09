@@ -2,15 +2,19 @@
  require_once("templates/header.php");
 
 
- // verifica se o user esta autenticadossss
- require_once("dao/userDAO.php");
+ // verifica se o user esta autenticado
+ require_once("dao/UserDAO.php");
+ require_once("dao/MovieDAO.php");
  require_once("models/User.php");
 
 
  $user = new User();
  $userDAO = new UserDao($conn, $BASE_URL);
+ $movieDAO = new MovieDAO($conn, $BASE_URL);
 
  $userData = $userDAO->verifyToken(true);
+
+ $userMovies = $movieDAO->getMoviesByUserId($userData->id);
 
 ?>
 
@@ -31,21 +35,25 @@
                 <th scope="col" class="actions-column">Ações</th>
               </thead>
               <tbody>
+                <?php foreach($userMovies as $movie): ?>
                 <tr>
-                    <td scope="row">1</td>
-                    <td><a href="#" class="table-movie-title">Título</a></td>
+                    <td scope="row"><?= $movie->id ?></td>
+                    <td><a href="<?= $BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="table-movie-title"><?= $movie->title ?></a></td>
                     <td><i class="fas fa-star"></i> 9</td>
                     <td class="actions-column">
-                        <a href="" class="edit-btn">
+                        <a href="<?= $BASE_URL ?>editmovie.php?id=<?= $movie->id ?>" class="edit-btn">
                             <i class="far fa-edit"></i> Editar
                         </a>
-                        <form action="">
+                        <form action="<?= $BASE_URL ?>movie_process.php">
+                        <input type="hidden" name="type" value="delete">
+                        <input type="hidden" name="id" value="<?= $movie->id ?>">
                             <button type="submit" class="delete-btn">
                                 <i class="fas fa-times"></i> Deletar
                             </button>
                         </form>
                     </td>
                 </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
         </div>
