@@ -17,9 +17,11 @@
                             <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha">
                         </div>
                         <input type="submit" class="btn card-btn" value="Entrar">
+                        <br><br>
+
+                        <p class="page-description">Novo no CineConnect?</p>
+                        <a href="auth_register.php" class="btn card-btn">Crie seu cadastro</a>
                     </form>
-                    <p class="page-description">Novo no CineConnect?</p>
-                    <a href="auth_register.php" class="btn card-btn">Crie seu cadastro</a>
                 </div>
             </div>
         </div>

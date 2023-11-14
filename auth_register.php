@@ -29,9 +29,12 @@
                             <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirme sua senha">
                         </div>
                         <input type="submit" class="btn card-btn" value="Registrar">
+                        <br><br>
+                        
+                        <p class="page-description">Já possui cadastro??</p>
+                        <a href="auth.php" class="btn card-btn">Fazer login</a>
+                        
                     </form>
-                    <p class="page-description">Já possui cadastro??</p>
-                    <a href="auth.php" class="btn card-btn">Fazer login</a>
                 </div>
             </div>
         </div>

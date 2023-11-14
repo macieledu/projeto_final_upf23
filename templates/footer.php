@@ -14,9 +14,7 @@
         </div>
         <div id="footer-links-container">
             <ul>
-                <li><a href="#">Adicionar filme</a></li>
-                <li><a href="#">Adicionar crítica</a></li>
-                <li><a href="#">Entrar / Registrar</a></li>
+                <li><a href="<?= $BASE_URL ?>newmovie.php">Adicionar filme</a></li>
             </ul>
         </div>
         <p>&copy; 2023 CineConnect</p>
