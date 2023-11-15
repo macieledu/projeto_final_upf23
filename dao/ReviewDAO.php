@@ -31,7 +31,56 @@
 
     }
 
-    public function create(Review $review) {
+    public function findById($id) {
+      if ($id !== "") {
+          $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE id = :id");
+          $stmt->bindParam(":id", $id);
+          $stmt->execute();
+
+          if ($stmt->rowCount() > 0) {
+              $data = $stmt->fetch();
+              return $this->buildReview($data);
+          } else {
+              return null; 
+          }
+      } else {
+          return null; 
+      }
+  }
+
+    public function destroy($id, $movies_id) {
+
+      $stmt = $this->conn->prepare("DELETE FROM reviews WHERE id = :id");
+
+      $stmt->bindParam(":id", $id);
+
+      $stmt->execute();
+
+      // Mensagem de sucesso por remover filme
+      $redirectUrl = "movie.php?id=" . $movies_id;
+      $this->message->setMessage("Review removido com sucesso!", "success", $redirectUrl);
+
+    }
+
+    public function update(Review $review, $movies_id) {
+      $stmt = $this->conn->prepare("UPDATE reviews SET
+          rating = :rating,
+          review = :review
+          WHERE id = :id
+      ");
+  
+      $stmt->bindParam(":rating", $review->rating);
+      $stmt->bindParam(":review", $review->review);
+      $stmt->bindParam(":id", $review->id);
+  
+      $stmt->execute();
+  
+      // Mensagem de sucesso por editar filme
+      $redirectUrl = "movie.php?id=" . $movies_id;
+      $this->message->setMessage("Filme atualizado com sucesso!", "success", $redirectUrl);
+  }
+
+    public function create(Review $review, $movies_id) {
 
       $stmt = $this->conn->prepare("INSERT INTO reviews (
         rating, review, movies_id, users_id
@@ -47,7 +96,8 @@
       $stmt->execute();
 
       // Mensagem de sucesso por adicionar filme
-      $this->message->setMessage("Crítica adicionada com sucesso!", "success", "index.php");
+      $redirectUrl = "movie.php?id=" . $movies_id;
+      $this->message->setMessage("Crítica adicionada com sucesso!", "success", $redirectUrl);
 
     }
 

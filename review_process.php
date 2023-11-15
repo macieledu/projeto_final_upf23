@@ -1,4 +1,5 @@
 <?php
+var_dump($_POST);
 
   require_once("globals.php");
   require_once("db.php");
@@ -12,9 +13,10 @@
   $message = new Message($BASE_URL);
   $userDao = new UserDAO($conn, $BASE_URL);
   $movieDao = new MovieDAO($conn, $BASE_URL);
-  $reviewDao = new ReviewDAO($conn, $BASE_URL);
 
   $type = filter_input(INPUT_POST, "type");
+
+  $reviewDao = new ReviewDao($conn, $BASE_URL);
 
   $userData = $userDao->verifyToken();
 
@@ -40,7 +42,7 @@
         $reviewObject->movies_id = $movies_id;
         $reviewObject->users_id = $users_id;
 
-        $reviewDao->create($reviewObject);
+        $reviewDao->create($reviewObject, $movies_id);
 
       } else {
 
@@ -54,7 +56,59 @@
 
     }
 
-  } else {
+  }else if($type === "delete") {
+
+    $id = filter_input(INPUT_POST, "id");
+
+    $reviewDao = new ReviewDao($conn, $BASE_URL);
+    $review = $reviewDao->findById($id);
+
+    if($review) {
+
+      // verifica se o filme pertence ao usuário
+      if($review->users_id === $userData->id) {
+
+        $reviewDao->destroy($review->id, $review->movies_id);
+
+      } else {
+
+        $message->setMessage("O review so pode ser deletado por quem o criou!", "error", "index.php");
+
+      }
+
+    } else {
+
+      $message->setMessage("Informações inválidas!", "error", "index.php");
+
+    }
+
+  }else if($type === "update") { 
+
+    //recebe dados
+    $rating = filter_input(INPUT_POST, "rating");
+    $review = filter_input(INPUT_POST, "review");
+    $id = filter_input(INPUT_POST, "reviews_id");
+    $movies_id = filter_input(INPUT_POST, "movies_id");
+
+    $reviewDao = new ReviewDao($conn, $BASE_URL);
+
+    $reviewData = $reviewDao->findById($id);
+
+    if(!empty($rating) && !empty($review)) {
+
+      $reviewData->review = $review;
+      $reviewData->rating = $rating;
+
+      $reviewDao->update($reviewData, $movies_id);
+
+    } else {
+
+      $message->setMessage("Você não pode deixar os campos em branco!", "error", "back");
+
+    }
+
+  
+  }else {
 
     $message->setMessage("Informações inválidas!", "error", "index.php");
 
