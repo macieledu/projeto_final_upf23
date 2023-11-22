@@ -56,9 +56,7 @@
 
       $stmt->execute();
 
-      // Mensagem de sucesso por remover filme
-      $redirectUrl = "movie.php?id=" . $movies_id;
-      $this->message->setMessage("Review removido com sucesso!", "success", $redirectUrl);
+      $this->message->setMessage("Review removido com sucesso!", "success", 'index.php');
 
     }
 
@@ -75,9 +73,7 @@
   
       $stmt->execute();
   
-      // Mensagem de sucesso por editar filme
-      $redirectUrl = "movie.php?id=" . $movies_id;
-      $this->message->setMessage("Filme atualizado com sucesso!", "success", $redirectUrl);
+      $this->message->setMessage("Review atualizado com sucesso!", "success", 'index.php');
   }
 
     public function create(Review $review, $movies_id) {
@@ -95,9 +91,7 @@
 
       $stmt->execute();
 
-      // Mensagem de sucesso por adicionar filme
-      $redirectUrl = "movie.php?id=" . $movies_id;
-      $this->message->setMessage("Crítica adicionada com sucesso!", "success", $redirectUrl);
+      $this->message->setMessage("Crítica adicionada com sucesso!", "success", 'index.php');
 
     }
 
