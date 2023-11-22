@@ -21,7 +21,7 @@ ADD FOREIGN KEY (movies_id) REFERENCES movies(id) ON DELETE CASCADE;
 ```
 
 ### 2. Criação do Banco de Dados
-Utilize o arquivo dbase.sql para criar o banco.
+Utilize o arquivo `dbase.php` para criar o banco.
 
 ### 3. Ajuste das Credenciais do Banco
 Abra o arquivo `db.php` e insira suas credenciais do banco de dados:
