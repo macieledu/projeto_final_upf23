@@ -18,6 +18,17 @@
     $userData = $userDAO->verifyToken(false);
 
 
+    // Função para limpar a mensagem
+    function limparMensagemCustomizada() {
+    $_SESSION["msg"] = "";
+    $_SESSION["type"] = "";
+    }
+
+    // Verifica se o parâmetro clearMessage está presente na URL
+    if (isset($_GET['limparMensagem']) && $_GET['limparMensagem'] == 'true') {
+    // Chama a função limparMensagemCustomizada
+    limparMensagemCustomizada();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +91,12 @@
     </header>
     <?php if(!empty($flassmessage["msg"])): ?>
         <div class="msg-container">
-            <p class="msg <?= $flassmessage["type"] ?>"><?= $flassmessage["msg"] ?></p>
+            <p class="msg <?= $flassmessage["type"] ?>"><?= $flassmessage["msg"] ?>
+            <span class="close-btn-container">
+                <a href="?limparMensagem=true" class="close-btn">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </span>
+            </p>
         </div>   
     <?php endif; ?>

@@ -18,7 +18,7 @@ CREATE TABLE movies(
     category VARCHAR(50),
     length VARCHAR(50),
     users_id INT(11) UNSIGNED,
-    FOREIGN KEY(users_id) REFERENCES users(id)
+    FOREIGN KEY(users_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE reviews(
@@ -27,6 +27,14 @@ CREATE TABLE reviews(
     review TEXT,
     users_id INT(11) UNSIGNED,
     movies_id INT(11) UNSIGNED,
-    FOREIGN KEY(users_id) REFERENCES users(id),
-    FOREIGN KEY(movies_id) REFERENCES movies(id)
+    FOREIGN KEY(users_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(movies_id) REFERENCES movies(id) ON DELETE CASCADE
 );
+
+
+--Ajustes de relação para db já criado
+ALTER TABLE reviews
+DROP FOREIGN KEY reviews_ibfk_2;
+
+ALTER TABLE reviews
+ADD FOREIGN KEY (movies_id) REFERENCES movies(id) ON DELETE CASCADE;

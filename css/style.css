@@ -81,6 +81,11 @@
   border-color: #BADBCC;
 }
 
+.close-btn-container {
+  float: right;
+  margin-right: 10px;
+}
+
 /* Home */
 #main-container {
   background-color: #000;
